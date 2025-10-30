@@ -40,8 +40,8 @@ export function MobileMenu() {
           />
           <nav
             className={cn(
-              "fixed top-0 right-0 bottom-0 w-72 bg-white shadow-2xl z-50 animate-slide-in",
-              "flex flex-col"
+              'fixed top-0 right-0 bottom-0 w-72 bg-white shadow-2xl z-50 animate-slide-in',
+              'flex flex-col'
             )}
             role="navigation"
             aria-label="移动端导航"
@@ -58,7 +58,7 @@ export function MobileMenu() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto py-4">
-              {navigation.map((item) => (
+              {navigation.map(item => (
                 <Link
                   key={item.name}
                   href={item.href}

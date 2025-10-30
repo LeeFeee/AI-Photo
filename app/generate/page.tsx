@@ -50,12 +50,8 @@ export default function GeneratePage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-          生成 AI 图片
-        </h1>
-        <p className="text-lg text-gray-600">
-          输入提示词或选择预设，让 AI 为您创作
-        </p>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">生成 AI 图片</h1>
+        <p className="text-lg text-gray-600">输入提示词或选择预设，让 AI 为您创作</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -63,19 +59,20 @@ export default function GeneratePage() {
           <Card>
             <CardHeader>
               <CardTitle>提示词设置</CardTitle>
-              <CardDescription>
-                描述您想要生成的图片
-              </CardDescription>
+              <CardDescription>描述您想要生成的图片</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label htmlFor="prompt-input" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="prompt-input"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   输入提示词
                 </label>
                 <textarea
                   id="prompt-input"
                   value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
+                  onChange={e => setPrompt(e.target.value)}
                   placeholder="例如：一只可爱的猫咪坐在窗台上，阳光洒在它身上..."
                   className="w-full h-32 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all resize-none"
                   aria-label="输入图片生成提示词"
@@ -83,11 +80,9 @@ export default function GeneratePage() {
               </div>
 
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-3">
-                  或选择预设提示词
-                </p>
+                <p className="text-sm font-medium text-gray-700 mb-3">或选择预设提示词</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {presetPrompts.map((preset) => (
+                  {presetPrompts.map(preset => (
                     <button
                       key={preset.id}
                       onClick={() => setPrompt(preset.value)}
@@ -137,9 +132,7 @@ export default function GeneratePage() {
           <Card className="h-full">
             <CardHeader>
               <CardTitle>生成结果</CardTitle>
-              <CardDescription>
-                您的 AI 生成图片将显示在这里
-              </CardDescription>
+              <CardDescription>您的 AI 生成图片将显示在这里</CardDescription>
             </CardHeader>
             <CardContent>
               {generatedImage ? (

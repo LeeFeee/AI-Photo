@@ -5,7 +5,7 @@ This document provides detailed descriptions of each page's visual design, layou
 ## 📱 Responsive Breakpoints
 
 - **Mobile**: < 768px
-- **Tablet**: 768px - 1024px  
+- **Tablet**: 768px - 1024px
 - **Desktop**: > 1024px
 
 All pages are fully responsive and tested across these breakpoints.
@@ -15,6 +15,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 🏠 Home Page (`/`)
 
 ### Desktop Layout
+
 - **Hero Section**
   - Large, bold headline: "AI 驱动的 智能图片生成"
   - Brand color (brand-600) accent on second line
@@ -37,12 +38,14 @@ All pages are fully responsive and tested across these breakpoints.
   - Secondary button variant for contrast
 
 ### Mobile Layout
+
 - Hero text scales down (4xl → 3xl)
 - Features become single column (grid-cols-1)
 - CTAs stack vertically
 - All tap targets meet 44px minimum
 
 ### Interactions
+
 - Button hover: color shift + shadow elevation
 - Button active: scale-95 transform
 - Card hover: scale and shadow
@@ -53,6 +56,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 📚 Prompts Page (`/prompts`)
 
 ### Desktop Layout
+
 - **Header Section**
   - Split layout: title on left, search on right
   - Search input with icon (Search lucide icon)
@@ -76,11 +80,13 @@ All pages are fully responsive and tested across these breakpoints.
   - Clear action to generate page
 
 ### Mobile Behavior
+
 - Search moves below title
 - Grid becomes single column
 - Cards remain interactive with touch
 
 ### Color Coding
+
 - 风景 (Landscape): Green
 - 人物 (Portrait): Blue
 - 抽象 (Abstract): Purple
@@ -93,12 +99,14 @@ All pages are fully responsive and tested across these breakpoints.
 ## ✨ Generate Page (`/generate`)
 
 ### Desktop Layout
+
 - **Two-Column Split**
   - Left: Input controls and settings
   - Right: Preview/result area
   - Equal spacing with gap-8
 
 ### Controls Section (Left)
+
 - **Prompt Input**
   - Large textarea (h-32)
   - Rounded-xl borders
@@ -118,6 +126,7 @@ All pages are fully responsive and tested across these breakpoints.
   - Disabled state when no prompt
 
 ### Preview Section (Right)
+
 - **Before Generation**
   - Dashed border placeholder
   - Centered icon + text
@@ -130,12 +139,14 @@ All pages are fully responsive and tested across these breakpoints.
   - Outline variant for secondary action
 
 ### Mobile Layout
+
 - Sections stack vertically
 - Controls on top, preview below
 - Full width for both sections
 - Maintains aspect ratios
 
 ### Interactions
+
 - **Generate Button**
   - Click triggers 3-second simulation
   - Shows loading spinner + "生成中..."
@@ -153,6 +164,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 🖼️ Dashboard Page (`/dashboard`)
 
 ### Desktop Layout
+
 - **Header Bar**
   - Title + count on left
   - "Generate New" button on right
@@ -165,6 +177,7 @@ All pages are fully responsive and tested across these breakpoints.
   - Gap-6 for breathing room
 
 ### Image Cards
+
 - **Card Structure**
   - Image area (4:3 aspect ratio)
   - Metadata section below
@@ -183,6 +196,7 @@ All pages are fully responsive and tested across these breakpoints.
   - Creates wave effect
 
 ### Empty State
+
 - Centered layout
 - Icon in gray circle
 - Clear message: "还没有生成作品"
@@ -190,6 +204,7 @@ All pages are fully responsive and tested across these breakpoints.
 - Full fade-in animation
 
 ### Load More
+
 - Appears after 9+ images
 - Centered button
 - Outline variant
@@ -200,6 +215,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 🔴 Error States
 
 ### 404 Page
+
 - Centered layout
 - FileQuestion icon in gray circle
 - Clear "404" number
@@ -209,6 +225,7 @@ All pages are fully responsive and tested across these breakpoints.
   - Secondary: Go to generate
 
 ### Error Boundary
+
 - Red circle with AlertCircle icon
 - "出错了" heading
 - User-friendly message
@@ -216,6 +233,7 @@ All pages are fully responsive and tested across these breakpoints.
 - Refresh button to retry
 
 ### Loading State
+
 - Centered spinner
 - "加载中..." text below
 - Brand-colored spinner
@@ -226,6 +244,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 🎨 Design Tokens Applied
 
 ### Colors
+
 - **Primary Actions**: brand-600 (#0284c7)
 - **Hover States**: brand-700 (#0369a1)
 - **Active States**: brand-800 (#075985)
@@ -235,6 +254,7 @@ All pages are fully responsive and tested across these breakpoints.
 - **Borders**: gray-200 (#e5e7eb), gray-300 on hover
 
 ### Typography
+
 - **Page Titles**: text-3xl md:text-4xl, font-bold
 - **Section Titles**: text-2xl, font-semibold
 - **Card Titles**: text-xl, font-semibold
@@ -243,6 +263,7 @@ All pages are fully responsive and tested across these breakpoints.
 - **Line Height**: Leading-tight for headings, default for body
 
 ### Spacing
+
 - **Page Padding**: px-4 (mobile), container mx-auto (desktop)
 - **Section Gaps**: space-y-8 for major sections
 - **Card Padding**: p-6 (CardHeader), p-6 pt-0 (CardContent)
@@ -250,6 +271,7 @@ All pages are fully responsive and tested across these breakpoints.
 - **Vertical Rhythm**: py-12 md:py-20 for hero sections
 
 ### Border Radius
+
 - **Buttons**: rounded-xl (12px)
 - **Cards**: rounded-2xl (16px)
 - **Inputs**: rounded-xl (12px)
@@ -257,12 +279,14 @@ All pages are fully responsive and tested across these breakpoints.
 - **Circles**: rounded-full
 
 ### Shadows
+
 - **Default**: shadow-sm (subtle)
 - **Hover**: shadow-md (elevated)
 - **Large**: shadow-lg (prominent)
 - **Combined**: shadow + border for depth
 
 ### Animations
+
 - **Fade In**: 0.3s ease-out, translateY(10px) → 0
 - **Slide In**: 0.3s ease-out, translateX(-100%) → 0
 - **Scale In**: 0.2s ease-out, scale(0.95) → 1
@@ -274,17 +298,20 @@ All pages are fully responsive and tested across these breakpoints.
 ## 📱 Mobile Navigation
 
 ### Hamburger Menu
+
 - Top-right corner
 - Menu icon (lucide-react)
 - Touch-friendly size (p-2, icon h-6 w-6)
 
 ### Drawer
+
 - Slides in from right
 - Full height, fixed width (w-72)
 - White background + shadow-2xl
 - Backdrop overlay (black/50)
 
 ### Menu Items
+
 - Icon + text layout
 - Vertical stack
 - Full-width clickable areas
@@ -292,6 +319,7 @@ All pages are fully responsive and tested across these breakpoints.
 - Active state indication
 
 ### Backdrop
+
 - Dismisses menu on click
 - Fade-in animation
 - z-40 layering
@@ -301,30 +329,35 @@ All pages are fully responsive and tested across these breakpoints.
 ## ♿ Accessibility Features
 
 ### Semantic HTML
+
 - `<header>`, `<main>`, `<footer>` landmarks
 - `<nav>` with role="navigation"
 - `<section>` with aria-labelledby
 - Proper heading hierarchy (h1 → h2 → h3)
 
 ### ARIA Labels
+
 - All icon-only buttons have aria-label
 - Hidden text for screen readers (.sr-only)
 - Loading states have role="status"
 - Expandable elements have aria-expanded
 
 ### Keyboard Navigation
+
 - All interactive elements focusable
 - Visible focus states (ring-2 ring-brand-500)
 - Tab order follows visual flow
 - Enter/Space activate buttons
 
 ### Color Contrast
+
 - Text on white: gray-900 (21:1 ratio)
 - Body text: gray-600 (7:1 ratio)
 - Links: brand-600 (4.5:1 ratio)
 - All pass WCAG AA standards
 
 ### Screen Reader Support
+
 - Descriptive link text (no "click here")
 - Image alt text describes content
 - Form labels properly associated
@@ -335,6 +368,7 @@ All pages are fully responsive and tested across these breakpoints.
 ## 🎯 Lighthouse Optimization
 
 ### Performance
+
 - Code splitting via Next.js
 - Static page generation
 - Minimal JavaScript: ~87KB shared
@@ -342,6 +376,7 @@ All pages are fully responsive and tested across these breakpoints.
 - No heavy dependencies
 
 ### Accessibility
+
 - 100% semantic HTML
 - Full ARIA support
 - Keyboard navigable
@@ -349,6 +384,7 @@ All pages are fully responsive and tested across these breakpoints.
 - Screen reader tested
 
 ### Best Practices
+
 - HTTPS ready
 - No console errors
 - Modern ES6+ code
@@ -356,6 +392,7 @@ All pages are fully responsive and tested across these breakpoints.
 - No deprecated APIs
 
 ### SEO
+
 - Meta tags on all pages
 - OpenGraph for social
 - Robots.txt included
@@ -379,6 +416,7 @@ Based on the implementation, we expect these Lighthouse scores in development bu
 ## 🎨 Design Philosophy: 简洁+创意
 
 ### 简洁 (Simplicity) Demonstrated
+
 1. **Clean Layouts**: Generous whitespace, clear sections
 2. **Consistent Patterns**: Repeating card/button styles
 3. **Minimal Colors**: Primary blue + accent purple + grays
@@ -386,6 +424,7 @@ Based on the implementation, we expect these Lighthouse scores in development bu
 5. **Intuitive Flow**: Logical page progression
 
 ### 创意 (Creativity) Demonstrated
+
 1. **Gradient CTAs**: Brand-to-accent color transitions
 2. **Hover Animations**: Scale, shadow, and color shifts
 3. **Staggered Entries**: Cards animate in sequence
@@ -412,4 +451,4 @@ Based on the implementation, we expect these Lighthouse scores in development bu
 
 ---
 
-*For detailed before/after notes and implementation details, see [POLISH_NOTES.md](./POLISH_NOTES.md)*
+_For detailed before/after notes and implementation details, see [POLISH_NOTES.md](./POLISH_NOTES.md)_

@@ -43,23 +43,26 @@ export default function HomePage() {
           <Button asChild size="lg">
             <Link href="/generate" className="group">
               开始生成
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              <ArrowRight
+                className="h-5 w-5 group-hover:translate-x-1 transition-transform"
+                aria-hidden="true"
+              />
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/prompts">
-              浏览提示词
-            </Link>
+            <Link href="/prompts">浏览提示词</Link>
           </Button>
         </div>
       </section>
 
       <section aria-labelledby="features-heading">
-        <h2 id="features-heading" className="sr-only">功能特点</h2>
+        <h2 id="features-heading" className="sr-only">
+          功能特点
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature, index) => (
-            <Card 
-              key={feature.title} 
+            <Card
+              key={feature.title}
               className="animate-fade-in hover:scale-105 transition-transform duration-200"
               style={{ animationDelay: `${index * 100}ms` }}
             >
@@ -68,9 +71,7 @@ export default function HomePage() {
                   <feature.icon className="h-6 w-6 text-brand-600" aria-hidden="true" />
                 </div>
                 <CardTitle className="text-xl">{feature.title}</CardTitle>
-                <CardDescription className="text-base">
-                  {feature.description}
-                </CardDescription>
+                <CardDescription className="text-base">{feature.description}</CardDescription>
               </CardHeader>
             </Card>
           ))}
@@ -78,16 +79,10 @@ export default function HomePage() {
       </section>
 
       <section className="bg-gradient-to-r from-brand-500 to-accent-500 rounded-3xl p-8 md:p-12 text-white text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          准备好开始了吗？
-        </h2>
-        <p className="text-xl mb-8 text-white/90">
-          探索 AI 图片生成的无限可能
-        </p>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">准备好开始了吗？</h2>
+        <p className="text-xl mb-8 text-white/90">探索 AI 图片生成的无限可能</p>
         <Button asChild size="lg" variant="secondary">
-          <Link href="/generate">
-            立即体验
-          </Link>
+          <Link href="/generate">立即体验</Link>
         </Button>
       </section>
     </div>

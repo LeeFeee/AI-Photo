@@ -4,7 +4,7 @@ export const analytics = {
       console.log('Analytics event:', event, properties)
     }
   },
-  
+
   page: (path: string) => {
     if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
       console.log('Page view:', path)
