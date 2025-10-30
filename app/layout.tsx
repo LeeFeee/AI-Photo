@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { ErrorBoundary } from '@/components/error-boundary'
+import { AuthProvider } from '@/lib/auth-context'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -40,32 +41,34 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className="min-h-screen bg-gray-50 flex flex-col">
-        <ErrorBoundary>
-          <Header />
-          <main className="flex-1 container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <Footer />
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: '#fff',
-                color: '#333',
-                borderRadius: '12px',
-                padding: '16px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#0ea5e9',
-                  secondary: '#fff',
+        <AuthProvider>
+          <ErrorBoundary>
+            <Header />
+            <main className="flex-1 container mx-auto px-4 py-8">
+              {children}
+            </main>
+            <Footer />
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: '#fff',
+                  color: '#333',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                 },
-              },
-            }}
-          />
-        </ErrorBoundary>
+                success: {
+                  iconTheme: {
+                    primary: '#0ea5e9',
+                    secondary: '#fff',
+                  },
+                },
+              }}
+            />
+          </ErrorBoundary>
+        </AuthProvider>
       </body>
     </html>
   )
