@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  generatedImages GeneratedImage[]
+}
+
+model Prompt {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  content     String
+  category    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  generatedImages GeneratedImage[]
+}
+
+model GeneratedImage {
+  id                String   @id @default(cuid())
+  userId            String
+  promptId          String
+  referenceImageUrl String?
+  generatedImageUrl String
+  tokenCost         Int      @default(0)
+  createdAt         DateTime @default(now())
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt Prompt @relation(fields: [promptId], references: [id])
+  
+  @@index([userId, createdAt])
+  @@index([promptId])
+}

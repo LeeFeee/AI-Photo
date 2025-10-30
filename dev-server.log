@@ -1,0 +1,17 @@
+
+> ai-photo@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.33
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1333ms
+ ○ Compiling /history ...
+ ✓ Compiled /history in 4.5s (608 modules)
+ GET /history 200 in 4956ms
+ ✓ Compiled in 593ms (297 modules)
+ ✓ Compiled /api/history in 345ms (341 modules)
+ GET /api/history 200 in 440ms
+[?25h
