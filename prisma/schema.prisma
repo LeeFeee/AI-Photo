@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型 - User Model
+model User {
+  id                  String        @id @default(cuid())
+  email               String        @unique
+  username            String        @unique
+  password            String
+  tokenBalance        Int           @default(0)
+  isMember            Boolean       @default(false)
+  membershipExpiresAt DateTime?
+  isAdmin             Boolean       @default(false)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  transactions        Transaction[]
+}
+
+// 交易模型 - Transaction Model
+model Transaction {
+  id              String            @id @default(cuid())
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            TransactionType
+  status          TransactionStatus @default(PENDING)
+  amount          Float
+  tokenAmount     Int?
+  stripePaymentId String?
+  description     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// 交易类型枚举 - Transaction Type Enum
+enum TransactionType {
+  TOKEN_PURCHASE
+  TOKEN_USAGE
+  MEMBERSHIP_PURCHASE
+  REFUND
+}
+
+// 交易状态枚举 - Transaction Status Enum
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
