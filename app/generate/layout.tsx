@@ -7,10 +7,6 @@ export const metadata = generateSEO({
   keywords: ['生成图片', 'AI生成', '图片创作', '提示词'],
 })
 
-export default function GenerateLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function GenerateLayout({ children }: { children: React.ReactNode }) {
   return children
 }

@@ -1,3 +1,11 @@
+/**
+ * 页面头部导航组件
+ * Page header navigation component
+ *
+ * 包含品牌 Logo、主导航菜单和移动端菜单
+ * Includes brand logo, main navigation menu, and mobile menu
+ */
+
 'use client'
 
 import Link from 'next/link'
@@ -18,9 +26,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4" role="navigation" aria-label="主导航">
-        <Link 
-          href="/" 
+      <nav
+        className="container mx-auto flex h-16 items-center justify-between px-4"
+        role="navigation"
+        aria-label="主导航"
+      >
+        <Link
+          href="/"
           className="text-2xl font-bold text-brand-600 hover:text-brand-700 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 rounded-lg px-2 py-1"
           aria-label="AI Photo 首页"
         >
@@ -28,18 +40,18 @@ export function Header() {
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">
-          {navigation.map((item) => {
+          {navigation.map(item => {
             const isActive = pathname === item.href
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200",
-                  "focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2",
+                  'flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200',
+                  'focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2',
                   isActive
-                    ? "bg-brand-100 text-brand-700"
-                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    ? 'bg-brand-100 text-brand-700'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                 )}
                 aria-current={isActive ? 'page' : undefined}
               >

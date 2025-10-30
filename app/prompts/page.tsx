@@ -60,17 +60,18 @@ export default function PromptsPage() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            提示词库
-          </h1>
-          <p className="text-lg text-gray-600">
-            探索各类风格的 AI 图片生成提示词
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">提示词库</h1>
+          <p className="text-lg text-gray-600">探索各类风格的 AI 图片生成提示词</p>
         </div>
-        
+
         <div className="relative w-full md:w-96">
-          <label htmlFor="search-prompts" className="sr-only">搜索提示词</label>
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <label htmlFor="search-prompts" className="sr-only">
+            搜索提示词
+          </label>
+          <Search
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
           <input
             id="search-prompts"
             type="search"
@@ -87,7 +88,7 @@ export default function PromptsPage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {promptCategories.map((category, index) => (
-            <Card 
+            <Card
               key={category.id}
               className="animate-fade-in hover:scale-105 transition-transform duration-200 cursor-pointer"
               style={{ animationDelay: `${index * 50}ms` }}
@@ -100,14 +101,10 @@ export default function PromptsPage() {
                   <div className={`rounded-lg p-2 ${category.color}`}>
                     <Tag className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <span className="text-sm text-gray-500">
-                    {category.count} 个提示词
-                  </span>
+                  <span className="text-sm text-gray-500">{category.count} 个提示词</span>
                 </div>
                 <CardTitle className="text-xl">{category.name}</CardTitle>
-                <CardDescription className="text-base">
-                  {category.description}
-                </CardDescription>
+                <CardDescription className="text-base">{category.description}</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button variant="ghost" className="w-full">
@@ -120,16 +117,10 @@ export default function PromptsPage() {
       </section>
 
       <section className="bg-brand-50 rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          需要自定义提示词？
-        </h2>
-        <p className="text-gray-600 mb-6">
-          您也可以在生成页面输入自己的创意提示词
-        </p>
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">需要自定义提示词？</h2>
+        <p className="text-gray-600 mb-6">您也可以在生成页面输入自己的创意提示词</p>
         <Button asChild>
-          <a href="/generate">
-            前往生成页面
-          </a>
+          <a href="/generate">前往生成页面</a>
         </Button>
       </section>
     </div>

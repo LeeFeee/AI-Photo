@@ -22,14 +22,7 @@ export function generateSEO({
   return {
     title: fullTitle,
     description,
-    keywords: [
-      'AI',
-      '人工智能',
-      '图片生成',
-      '照片',
-      'AI图片',
-      ...keywords,
-    ],
+    keywords: ['AI', '人工智能', '图片生成', '照片', 'AI图片', ...keywords],
     authors: [{ name: 'AI Photo Team' }],
     creator: 'AI Photo',
     publisher: 'AI Photo',

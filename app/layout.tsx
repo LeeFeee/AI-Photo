@@ -32,19 +32,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
       <body className="min-h-screen bg-gray-50 flex flex-col">
         <ErrorBoundary>
           <Header />
-          <main className="flex-1 container mx-auto px-4 py-8">
-            {children}
-          </main>
+          <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
           <Footer />
           <Toaster
             position="top-center"

@@ -43,9 +43,7 @@ export default function DashboardPage() {
           description="前往生成页面，创建您的第一张 AI 图片吧"
           action={
             <Button asChild>
-              <a href="/generate">
-                开始生成
-              </a>
+              <a href="/generate">开始生成</a>
             </Button>
           }
         />
@@ -57,23 +55,17 @@ export default function DashboardPage() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            我的作品
-          </h1>
-          <p className="text-lg text-gray-600">
-            共 {mockImages.length} 张图片
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">我的作品</h1>
+          <p className="text-lg text-gray-600">共 {mockImages.length} 张图片</p>
         </div>
         <Button asChild>
-          <a href="/generate">
-            生成新图片
-          </a>
+          <a href="/generate">生成新图片</a>
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockImages.map((image, index) => (
-          <Card 
+          <Card
             key={image.id}
             className="group animate-fade-in overflow-hidden"
             style={{ animationDelay: `${index * 100}ms` }}
@@ -87,25 +79,17 @@ export default function DashboardPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-end gap-2">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    aria-label="下载图片"
-                  >
+                  <Button size="sm" variant="secondary" aria-label="下载图片">
                     <Download className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
               </div>
             </div>
             <CardContent className="p-4">
-              <p className="text-sm text-gray-900 font-medium mb-2 line-clamp-2">
-                {image.prompt}
-              </p>
+              <p className="text-sm text-gray-900 font-medium mb-2 line-clamp-2">{image.prompt}</p>
               <div className="flex items-center text-xs text-gray-500">
                 <Clock className="h-3 w-3 mr-1" aria-hidden="true" />
-                <time dateTime={image.createdAt}>
-                  {image.createdAt}
-                </time>
+                <time dateTime={image.createdAt}>{image.createdAt}</time>
               </div>
             </CardContent>
           </Card>
