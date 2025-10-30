@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  tokens    Int      @default(100)
+  isMember  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  generatedImages GeneratedImage[]
+  transactions    Transaction[]
+}
+
+model Prompt {
+  id             String   @id @default(cuid())
+  title          String
+  content        String
+  description    String?
+  category       String?
+  membersOnly    Boolean  @default(false)
+  tokenCost      Int      @default(10)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  generatedImages GeneratedImage[]
+}
+
+model GeneratedImage {
+  id           String   @id @default(cuid())
+  userId       String
+  promptId     String
+  imageUrl     String
+  referenceUrl String?
+  metadata     String?  // JSON string for additional metadata
+  status       String   @default("completed") // completed, failed, processing
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt Prompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([promptId])
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // token_consumption, token_purchase, token_refund
+  amount      Int      // negative for consumption, positive for purchase/refund
+  balance     Int      // balance after transaction
+  status      String   @default("completed") // completed, pending, failed
+  description String?
+  metadata    String?  // JSON string for additional metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
