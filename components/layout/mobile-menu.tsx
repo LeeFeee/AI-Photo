@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Home, Image, Wand2, LayoutDashboard } from 'lucide-react'
+import { Menu, X, Home, Image, Wand2, LayoutDashboard, Coins } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
@@ -10,6 +10,7 @@ const navigation = [
   { name: '提示词库', href: '/prompts', icon: Image },
   { name: '生成图片', href: '/generate', icon: Wand2 },
   { name: '我的作品', href: '/dashboard', icon: LayoutDashboard },
+  { name: '购买代币', href: '/pricing/tokens', icon: Coins },
 ]
 
 export function MobileMenu() {

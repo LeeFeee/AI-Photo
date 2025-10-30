@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  name          String?
+  tokenBalance  Int           @default(0) // 代币余额
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  transactions  Transaction[]
+  generations   Generation[]
+}
+
+// 交易记录模型
+model Transaction {
+  id              String            @id @default(cuid())
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type            TransactionType   // 交易类型
+  amount          Int               // 金额（分）
+  tokens          Int               // 代币数量
+  status          TransactionStatus // 交易状态
+  stripeSessionId String?           @unique // Stripe session ID
+  stripePaymentId String?           // Stripe payment intent ID
+  metadata        String?           // JSON 元数据
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([stripeSessionId])
+  @@index([status])
+}
+
+// 生成记录模型（用于未来扩展）
+model Generation {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt    String
+  imageUrl  String?
+  tokens    Int      @default(1) // 消耗的代币数
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+// 交易类型枚举
+enum TransactionType {
+  token_purchase  // 代币购买
+  token_usage     // 代币使用
+  token_refund    // 代币退款
+}
+
+// 交易状态枚举
+enum TransactionStatus {
+  pending    // 待处理
+  completed  // 已完成
+  failed     // 失败
+  refunded   // 已退款
+}
