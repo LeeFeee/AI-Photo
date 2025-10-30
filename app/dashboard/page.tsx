@@ -1,8 +1,11 @@
-import { ImageIcon, Clock, Download } from 'lucide-react'
+import { ImageIcon, Clock, Download, Coins, Crown } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { EmptyState } from '@/components/ui/empty-state'
 import { generateSEO } from '@/lib/seo'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 export const metadata = generateSEO({
   title: '我的作品',
@@ -33,10 +36,52 @@ const mockImages = [
 
 const hasImages = mockImages.length > 0
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // 获取用户会话 - Get user session
+  const session = await getServerSession(authOptions)
+
+  // 如果未登录，重定向到登录页 - Redirect to login if not authenticated
+  if (!session) {
+    redirect('/login?callbackUrl=/dashboard')
+  }
+
+  const { user } = session
+
   if (!hasImages) {
     return (
-      <div className="animate-fade-in">
+      <div className="animate-fade-in space-y-6">
+        {/* 用户账户信息 - User account info */}
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  {user.name || '用户'}
+                </h2>
+                <p className="text-sm text-gray-600">{user.email}</p>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2 px-4 py-2 bg-brand-50 rounded-lg">
+                  <Coins className="h-5 w-5 text-brand-600" aria-hidden="true" />
+                  <div>
+                    <div className="text-xs text-gray-600">代币余额</div>
+                    <div className="text-lg font-bold text-brand-700">{user.tokenBalance}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-lg">
+                  <Crown className="h-5 w-5 text-purple-600" aria-hidden="true" />
+                  <div>
+                    <div className="text-xs text-gray-600">会员状态</div>
+                    <div className="text-sm font-bold text-purple-700">
+                      {user.isMember ? '会员' : '普通用户'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         <EmptyState
           icon={ImageIcon}
           title="还没有生成作品"
@@ -55,6 +100,38 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
+      {/* 用户账户信息 - User account info */}
+      <Card>
+        <CardContent className="p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">
+                {user.name || '用户'}
+              </h2>
+              <p className="text-sm text-gray-600">{user.email}</p>
+            </div>
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2 px-4 py-2 bg-brand-50 rounded-lg">
+                <Coins className="h-5 w-5 text-brand-600" aria-hidden="true" />
+                <div>
+                  <div className="text-xs text-gray-600">代币余额</div>
+                  <div className="text-lg font-bold text-brand-700">{user.tokenBalance}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-lg">
+                <Crown className="h-5 w-5 text-purple-600" aria-hidden="true" />
+                <div>
+                  <div className="text-xs text-gray-600">会员状态</div>
+                  <div className="text-sm font-bold text-purple-700">
+                    {user.isMember ? '会员' : '普通用户'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">

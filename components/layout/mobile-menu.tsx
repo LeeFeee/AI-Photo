@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X, Home, Image, Wand2, LayoutDashboard } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
+import { Menu, X, Home, Image, Wand2, LayoutDashboard, LogIn, UserPlus, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navigation = [
@@ -14,6 +15,12 @@ const navigation = [
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
+  const { data: session, status } = useSession()
+
+  const handleSignOut = async () => {
+    setIsOpen(false)
+    await signOut({ callbackUrl: '/' })
+  }
 
   return (
     <div className="lg:hidden">
@@ -69,6 +76,45 @@ export function MobileMenu() {
                   <span className="font-medium">{item.name}</span>
                 </Link>
               ))}
+            </div>
+
+            <div className="border-t p-4">
+              {status === 'loading' ? (
+                <div className="h-12 animate-pulse bg-gray-200 rounded-lg" />
+              ) : session ? (
+                <div className="space-y-2">
+                  <div className="px-2 py-2 text-sm text-gray-700">
+                    <div className="font-medium">{session.user.name || '用户'}</div>
+                    <div className="text-xs text-gray-500">{session.user.email}</div>
+                  </div>
+                  <button
+                    onClick={handleSignOut}
+                    className="flex items-center gap-3 px-4 py-3 w-full text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors rounded-lg"
+                  >
+                    <LogOut className="h-5 w-5" aria-hidden="true" />
+                    <span className="font-medium">退出登录</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <LogIn className="h-5 w-5" aria-hidden="true" />
+                    <span className="font-medium">登录</span>
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="flex items-center gap-3 px-4 py-3 bg-brand-600 text-white hover:bg-brand-700 transition-colors rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <UserPlus className="h-5 w-5" aria-hidden="true" />
+                    <span className="font-medium">注册</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </nav>
         </>

@@ -1,0 +1,35 @@
+import 'next-auth'
+import 'next-auth/jwt'
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string
+      email: string
+      name?: string | null
+      image?: string | null
+      tokenBalance: number
+      isMember: boolean
+      membershipExpiresAt: Date | null
+    }
+  }
+
+  interface User {
+    id: string
+    email: string
+    name?: string | null
+    image?: string | null
+    tokenBalance?: number
+    isMember?: boolean
+    membershipExpiresAt?: Date | null
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string
+    tokenBalance: number
+    isMember: boolean
+    membershipExpiresAt: Date | null
+  }
+}

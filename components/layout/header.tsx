@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Image, Wand2, LayoutDashboard } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
+import { Home, Image, Wand2, LayoutDashboard, User, LogOut, LogIn, UserPlus } from 'lucide-react'
 import { MobileMenu } from './mobile-menu'
 import { cn } from '@/lib/utils'
 
@@ -15,6 +16,11 @@ const navigation = [
 
 export function Header() {
   const pathname = usePathname()
+  const { data: session, status } = useSession()
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: '/' })
+  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
@@ -48,6 +54,43 @@ export function Header() {
               </Link>
             )
           })}
+        </div>
+
+        <div className="hidden lg:flex items-center gap-2">
+          {status === 'loading' ? (
+            <div className="h-10 w-10 animate-pulse bg-gray-200 rounded-full" />
+          ) : session ? (
+            <div className="flex items-center gap-2">
+              <div className="text-sm text-gray-700">
+                {session.user.name || session.user.email}
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                aria-label="退出登录"
+              >
+                <LogOut className="h-5 w-5" aria-hidden="true" />
+                <span>退出</span>
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/login"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+              >
+                <LogIn className="h-5 w-5" aria-hidden="true" />
+                <span>登录</span>
+              </Link>
+              <Link
+                href="/register"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all duration-200 bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+              >
+                <UserPlus className="h-5 w-5" aria-hidden="true" />
+                <span>注册</span>
+              </Link>
+            </div>
+          )}
         </div>
 
         <MobileMenu />
