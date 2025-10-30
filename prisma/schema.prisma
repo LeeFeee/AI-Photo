@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 交易类型枚举
+enum TransactionType {
+  PURCHASE_TOKENS // 购买代币
+  PURCHASE_MEMBERSHIP // 购买会员
+  REFUND // 退款
+}
+
+// 交易状态枚举
+enum TransactionStatus {
+  PENDING // 待处理
+  COMPLETED // 已完成
+  FAILED // 失败
+  REFUNDED // 已退款
+}
+
+// 普通用户表
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  username            String    @unique
+  passwordHash        String
+  tokenBalance        Int       @default(0)
+  isMember            Boolean   @default(false)
+  membershipExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  // 关系
+  generatedImages GeneratedImage[]
+  transactions    Transaction[]
+
+  @@index([email])
+  @@index([username])
+}
+
+// 管理员用户表
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+}
+
+// 提示词模板表
+model Prompt {
+  id              String   @id @default(cuid())
+  name            String
+  content         String   @db.Text
+  previewImageUrl String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // 关系
+  generatedImages GeneratedImage[]
+
+  @@index([isActive])
+}
+
+// 生成图片记录表
+model GeneratedImage {
+  id                String   @id @default(cuid())
+  userId            String
+  promptId          String
+  referenceImageUrl String?
+  generatedImageUrl String
+  tokenCost         Int
+  createdAt         DateTime @default(now())
+
+  // 关系
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt Prompt @relation(fields: [promptId], references: [id], onDelete: Restrict)
+
+  @@index([userId])
+  @@index([promptId])
+  @@index([createdAt])
+}
+
+// 交易记录表
+model Transaction {
+  id              String            @id @default(cuid())
+  userId          String
+  type            TransactionType
+  amount          Decimal           @db.Decimal(10, 2)
+  tokens          Int               @default(0)
+  stripePaymentId String?           @unique
+  status          TransactionStatus @default(PENDING)
+  createdAt       DateTime          @default(now())
+
+  // 关系
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}

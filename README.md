@@ -20,12 +20,27 @@
 - **UI 组件**: Radix UI
 - **图标**: Lucide React
 - **通知**: React Hot Toast
+- **数据库**: PostgreSQL + Prisma ORM
+- **密码加密**: bcryptjs
 
 ## 📦 安装
 
 ```bash
 # 安装依赖
 npm install
+
+# 设置环境变量
+cp .env.example .env
+# 编辑 .env 文件，配置数据库连接
+
+# 生成 Prisma Client
+npm run prisma:generate
+
+# 运行数据库迁移
+npm run prisma:migrate
+
+# 填充种子数据（可选）
+npm run db:seed
 
 # 开发模式
 npm run dev
@@ -39,6 +54,46 @@ npm start
 # 代码检查
 npm run lint
 ```
+
+## 🗄️ 数据库设置
+
+本项目使用 PostgreSQL 作为数据库，Prisma 作为 ORM。
+
+### 快速开始
+
+1. 安装并启动 PostgreSQL
+2. 创建数据库：`CREATE DATABASE ai_photo;`
+3. 配置 `.env` 文件中的 `DATABASE_URL`
+4. 运行迁移：`npm run prisma:migrate`
+5. 填充种子数据：`npm run db:seed`
+
+### 数据库命令
+
+```bash
+# 生成 Prisma Client
+npm run prisma:generate
+
+# 创建和应用迁移
+npm run prisma:migrate
+
+# 打开 Prisma Studio (数据库 GUI)
+npm run prisma:studio
+
+# 运行种子脚本
+npm run db:seed
+
+# 重置数据库
+npm run db:reset
+```
+
+### 默认账户
+
+种子数据会创建以下测试账户：
+
+- **管理员**: admin@aiphoto.com / admin123
+- **演示用户**: demo@example.com / demo123
+
+详细的数据库文档请参阅 [/docs/database.md](./docs/database.md)
 
 ## 🎨 设计系统
 
