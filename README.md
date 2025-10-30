@@ -20,12 +20,17 @@
 - **UI 组件**: Radix UI
 - **图标**: Lucide React
 - **通知**: React Hot Toast
+- **云存储**: Cloudflare R2 / AWS S3
 
 ## 📦 安装
 
 ```bash
 # 安装依赖
 npm install
+
+# 配置环境变量（云存储）
+cp .env.example .env.local
+# 编辑 .env.local 并填入您的存储配置
 
 # 开发模式
 npm run dev
@@ -39,6 +44,68 @@ npm start
 # 代码检查
 npm run lint
 ```
+
+## ☁️ 云存储配置
+
+本应用支持安全的图片上传到 Cloudflare R2 或 AWS S3。
+
+### 快速开始
+
+1. **复制环境变量模板**
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. **配置存储服务**
+   
+   选择 Cloudflare R2（推荐）或 AWS S3，并在 `.env.local` 中配置：
+   
+   ```env
+   R2_ACCESS_KEY_ID=your_access_key
+   R2_SECRET_ACCESS_KEY=your_secret_key
+   R2_BUCKET_NAME=your_bucket_name
+   R2_ENDPOINT=https://your_account_id.r2.cloudflarestorage.com
+   R2_REGION=auto
+   R2_PUBLIC_URL=https://your-cdn-domain.com
+   ```
+
+3. **配置 CORS 和存储桶策略**
+   
+   详细配置步骤请参阅 [STORAGE_SETUP.md](./STORAGE_SETUP.md)
+
+### 功能特性
+
+- ✅ **预签名 URL 上传** - 客户端直接上传，无需通过服务器
+- ✅ **文件验证** - 类型和大小验证（默认最大 5MB）
+- ✅ **拖放上传** - 支持拖拽和点击上传
+- ✅ **实时进度** - 显示上传进度和状态
+- ✅ **图片预览** - 上传前后实时预览
+- ✅ **错误处理** - 完整的错误提示（中文）
+- ✅ **安全认证** - 只有已认证用户可上传
+
+### 使用示例
+
+```tsx
+import { ImageUpload } from '@/components/ui/image-upload'
+
+function MyComponent() {
+  const handleUploadComplete = (result) => {
+    if (result.success) {
+      console.log('上传成功！URL:', result.url)
+      // 保存 URL 到数据库
+    }
+  }
+
+  return (
+    <ImageUpload
+      folder="prompts"
+      onUploadComplete={handleUploadComplete}
+    />
+  )
+}
+```
+
+详细配置指南：**[STORAGE_SETUP.md](./STORAGE_SETUP.md)**
 
 ## 🎨 设计系统
 
@@ -107,15 +174,18 @@ npm run lint
 
 详细的实施笔记和前后对比请参阅 [POLISH_NOTES.md](./POLISH_NOTES.md)
 
+云存储配置指南请参阅 [STORAGE_SETUP.md](./STORAGE_SETUP.md)
+
 ## 🚀 未来增强
 
 - Storybook 组件文档
-- 用户认证
+- 用户认证系统（当前为占位实现）
 - 实际 AI API 集成
 - 高级提示词构建器
 - 图片编辑功能
 - 社交分享
 - 用户偏好设置
+- 数据库集成（持久化上传记录）
 
 ## 📄 许可
 
