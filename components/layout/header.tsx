@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Image, Wand2, LayoutDashboard } from 'lucide-react'
+import { Home, Image, Wand2, LayoutDashboard, Crown } from 'lucide-react'
 import { MobileMenu } from './mobile-menu'
 import { cn } from '@/lib/utils'
 
@@ -11,6 +11,7 @@ const navigation = [
   { name: '提示词库', href: '/prompts', icon: Image },
   { name: '生成图片', href: '/generate', icon: Wand2 },
   { name: '我的作品', href: '/dashboard', icon: LayoutDashboard },
+  { name: '会员', href: '/pricing/membership', icon: Crown },
 ]
 
 export function Header() {

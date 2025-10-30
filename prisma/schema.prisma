@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型 (User Model)
+// 管理用户账户、会员状态和代币余额
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 会员相关 (Membership related)
+  isMember            Boolean   @default(false)
+  membershipExpiresAt DateTime?
+  stripeCustomerId    String?   @unique
+
+  // 代币系统 (Token system)
+  // 会员资格不影响代币 (Membership does not affect tokens)
+  tokens Int @default(0)
+
+  // 关系 (Relations)
+  transactions Transaction[]
+  generations  Generation[]
+
+  @@map("users")
+}
+
+// 交易记录模型 (Transaction Model)
+// 记录所有支付和消费，区分会员购买和代币购买
+model Transaction {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // 交易类型 (Transaction types):
+  // - membership_purchase: 会员购买 (amount有值, tokens=0)
+  // - token_purchase: 代币购买 (amount有值, tokens>0)
+  // - token_consumption: 代币消耗 (amount=0, tokens为负值)
+  type      String
+  
+  amount    Float    @default(0) // 金额（人民币）
+  tokens    Int      @default(0) // 代币变化量
+  status    String   // pending, completed, failed
+  
+  stripeSessionId      String?  @unique
+  stripeSubscriptionId String?
+  
+  metadata  Json?    // 额外信息
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([type])
+  @@map("transactions")
+}
+
+// 图片生成记录 (Generation Record)
+model Generation {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  prompt    String
+  imageUrl  String?
+  status    String   // pending, completed, failed
+  
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("generations")
+}

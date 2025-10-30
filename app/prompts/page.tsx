@@ -110,8 +110,10 @@ export default function PromptsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button variant="ghost" className="w-full">
-                  查看全部
+                <Button variant="ghost" className="w-full" asChild>
+                  <a href={`/prompts/${category.id}`}>
+                    查看全部
+                  </a>
                 </Button>
               </CardContent>
             </Card>
